@@ -1,12 +1,13 @@
 import fs from 'fs';
-import { parseLine } from './logParser';
+import { parseLog } from './logParser';
 import { getNumberOfIps, getTop3Items } from './reporter';
+import { LogInfo } from './types';
 
 const filePath = 'data/programming-task-example-data.log';
 
 // TODO: stream file
 const file = fs.readFileSync(filePath, 'utf-8');
-const parsedLines: {ip: string; url: string}[] = file.split('\n').map(line => parseLine(line)).filter(line => line !== null);
+const parsedLines: LogInfo[] = file.split('\n').map(line => parseLog(line)).filter(line => line !== null);
 
 const numberOfIps = getNumberOfIps(parsedLines);
 const top3Urls = getTop3Items(parsedLines.map(line => line.url));
